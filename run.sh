@@ -1,11 +1,13 @@
 #!/bin/sh
 rm -rf ./tmp && mkdir tmp
-export ADDR1=$(go run main.go createwallet)
-export ADDR2=$(go run main.go createwallet)
-go run main.go createblockchain -address $ADDR1
-# go run main.go reindexutxo
-go run main.go getbalance -address $ADDR1
-go run main.go getbalance -address $ADDR2
-go run main.go send -from $ADDR1 -to $ADDR2 -amount 5
-go run main.go getbalance -address $ADDR1
-go run main.go getbalance -address $ADDR2
+export CHAIN="go run main.go"
+export ADDR1=$($CHAIN createwallet)
+export ADDR2=$($CHAIN createwallet)
+$CHAIN createblockchain -address $ADDR1
+# $CHAIN reindexutxo
+$CHAIN getbalance -address $ADDR1
+$CHAIN getbalance -address $ADDR2
+$CHAIN send -from $ADDR1 -to $ADDR2 -amount 5
+$CHAIN getbalance -address $ADDR1
+$CHAIN getbalance -address $ADDR2
+$CHAIN printchain
